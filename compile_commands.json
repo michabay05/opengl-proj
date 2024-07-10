@@ -1,0 +1,78 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-pedantic",
+      "-std=c17",
+      "-Iinclude",
+      "-Ivendor/include",
+      "-ggdb",
+      "-c",
+      "-o",
+      "obj/debug/glad.o",
+      "src/glad.c"
+    ],
+    "directory": "/home/michabay/projects/opengl-proj",
+    "file": "/home/michabay/projects/opengl-proj/src/glad.c",
+    "output": "/home/michabay/projects/opengl-proj/obj/debug/glad.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-pedantic",
+      "-std=c17",
+      "-Iinclude",
+      "-Ivendor/include",
+      "-ggdb",
+      "-c",
+      "-o",
+      "obj/debug/main.o",
+      "src/main.c"
+    ],
+    "directory": "/home/michabay/projects/opengl-proj",
+    "file": "/home/michabay/projects/opengl-proj/src/main.c",
+    "output": "/home/michabay/projects/opengl-proj/obj/debug/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-pedantic",
+      "-std=c17",
+      "-Iinclude",
+      "-Ivendor/include",
+      "-O3",
+      "-c",
+      "-o",
+      "obj/release/glad.o",
+      "src/glad.c"
+    ],
+    "directory": "/home/michabay/projects/opengl-proj",
+    "file": "/home/michabay/projects/opengl-proj/src/glad.c",
+    "output": "/home/michabay/projects/opengl-proj/obj/release/glad.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-pedantic",
+      "-std=c17",
+      "-Iinclude",
+      "-Ivendor/include",
+      "-O3",
+      "-c",
+      "-o",
+      "obj/release/main.o",
+      "src/main.c"
+    ],
+    "directory": "/home/michabay/projects/opengl-proj",
+    "file": "/home/michabay/projects/opengl-proj/src/main.c",
+    "output": "/home/michabay/projects/opengl-proj/obj/release/main.o"
+  }
+]
