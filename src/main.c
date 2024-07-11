@@ -49,14 +49,15 @@ int main(void) {
 
     glViewport(0, 0, 800, 600);
     glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_DEPTH_TEST);
     // TODO: implement frame resize callback
 
     GLuint vao, vbo;
     VertInfo triangle[] = {
-        {{-0.5, -0.5, 0.0}, {1.0, 0.0, 0.0, 1.0}},
-        {{0.5, -0.5, 0.0}, {0.0, 1.0, 0.0, 1.0}},
-        {{0.0, 0.5, 0.0}, {0.0, 0.0, 1.0, 1.0}},
+        {{-0.5, -0.5, 0.0}, {1.0, 0.0, 0.0, 0.5}},
+        {{0.5, -0.5, 0.0}, {0.0, 1.0, 0.0, 0.5}},
+        {{0.0, 0.5, 0.0}, {0.0, 0.0, 1.0, 0.0}},
     };
     init_buffers(triangle, &vao, &vbo);
 
