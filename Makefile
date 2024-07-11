@@ -11,7 +11,7 @@ COMP = clang
 COMMON_COMPFLAGS = -Wall -Wextra -pedantic -std=c17 -I$(INCDIR) -I$(VENDOR_INCDIR)
 COMPFLAGS_DEBUG = -ggdb
 COMPFLAGS_RELEASE = -O3
-LDFLAGS = -L$(VENDOR_LIBDIR) -l:libglfw3.a -lm
+LDFLAGS = -L$(VENDOR_LIBDIR) -l:libcglm.a -l:libglfw3.a -lm
 
 SOURCES = $(wildcard $(SRCDIR)/*.c)
 OBJECTS_DEBUG = $(patsubst $(SRCDIR)/%.c, $(OBJDIR_DEBUG)/%.o, $(SOURCES))
