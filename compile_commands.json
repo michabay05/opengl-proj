@@ -6,7 +6,7 @@
       "-Wextra",
       "-pedantic",
       "-std=c17",
-      "-Iinclude",
+      "-Isrc/include",
       "-Ivendor/include",
       "-ggdb",
       "-c",
@@ -25,7 +25,7 @@
       "-Wextra",
       "-pedantic",
       "-std=c17",
-      "-Iinclude",
+      "-Isrc/include",
       "-Ivendor/include",
       "-ggdb",
       "-c",
@@ -36,5 +36,24 @@
     "directory": "/home/michabay/projects/opengl-proj",
     "file": "/home/michabay/projects/opengl-proj/src/main.c",
     "output": "/home/michabay/projects/opengl-proj/obj/debug/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-pedantic",
+      "-std=c17",
+      "-Isrc/include",
+      "-Ivendor/include",
+      "-ggdb",
+      "-c",
+      "-o",
+      "obj/debug/window.o",
+      "src/window.c"
+    ],
+    "directory": "/home/michabay/projects/opengl-proj",
+    "file": "/home/michabay/projects/opengl-proj/src/window.c",
+    "output": "/home/michabay/projects/opengl-proj/obj/debug/window.o"
   }
 ]
