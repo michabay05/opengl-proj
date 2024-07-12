@@ -6,10 +6,8 @@
 
 struct Window window;
 
-void a_debug_callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length,
-                      const GLchar *message, const void *userParam);
-void frame_resize_callback(GLFWwindow *window, int width, int height);
-void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods);
+static void _frame_resize_callback(GLFWwindow *window, int width, int height);
+static void _key_callback(GLFWwindow *window, int key, int scancode, int action, int mods);
 
 bool window_create(uint32_t width, uint32_t height, const char *title)
 {
@@ -37,8 +35,9 @@ bool window_create(uint32_t width, uint32_t height, const char *title)
     window.width = width;
     window.height = height;
 
-    glfwSetFramebufferSizeCallback(window.handle, frame_resize_callback);
-    glfwSetKeyCallback(window.handle, key_callback);
+    glfwSetFramebufferSizeCallback(window.handle, _frame_resize_callback);
+    glfwSetKeyCallback(window.handle, _key_callback);
+    // TODO: implement mouse callback
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         printf("[ERROR] Unable to intialize GLAD.\n");
@@ -49,11 +48,12 @@ bool window_create(uint32_t width, uint32_t height, const char *title)
     return true;
 }
 
-void window_clear_input(void) {
+void window_clear_input(void)
+{
     memset(window.input.keys, 0, KEYS_COUNT);
 }
 
-void key_callback(GLFWwindow *win, int key, int scancode, int action, int mods)
+static void _key_callback(GLFWwindow *win, int key, int scancode, int action, int mods)
 {
     (void)win;
     (void)scancode;
@@ -71,7 +71,7 @@ void key_callback(GLFWwindow *win, int key, int scancode, int action, int mods)
     }
 }
 
-void frame_resize_callback(GLFWwindow *win, int width, int height)
+static void _frame_resize_callback(GLFWwindow *win, int width, int height)
 {
     (void)win;
     window.width = width;

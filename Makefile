@@ -14,8 +14,6 @@ COMPFLAGS_RELEASE = -O3
 LDFLAGS = -L$(VENDOR_LIBDIR) -l:libcglm.a -l:libglfw3.a -lm
 
 SOURCES = $(wildcard $(SRCDIR)/*.c)
-SRC_INCLUDES = $(wildcard $(INCDIR)/*.h)
-VENDOR_INCLUDES = $(wildcard $(VENDOR_INCDIR)/*.c)
 OBJECTS_DEBUG = $(patsubst $(SRCDIR)/%.c, $(OBJDIR_DEBUG)/%.o, $(SOURCES))
 OBJECTS_RELEASE = $(patsubst $(SRCDIR)/%.c, $(OBJDIR_RELEASE)/%.o, $(SOURCES))
 BIN_NAME = opengl-proj
@@ -35,7 +33,7 @@ debug_setup:
 $(BINARY_DEBUG): $(OBJECTS_DEBUG)
 	$(COMP) $^ -o $@ $(LDFLAGS)
 
-$(OBJDIR_DEBUG)/%.o: $(SRCDIR)/%.c $(SRC_INCLUDES) $(VENDOR_INCLUDES)
+$(OBJDIR_DEBUG)/%.o: $(SRCDIR)/%.c
 	$(COMP) $(COMMON_COMPFLAGS) $(COMPFLAGS_DEBUG) -c $< -o $@
 
 release: release_setup $(BINARY_RELEASE)
@@ -47,7 +45,7 @@ release_setup:
 $(BINARY_RELEASE): $(OBJECTS_RELEASE)
 	$(COMP) $^ -o $@ $(LDFLAGS)
 
-$(OBJDIR_RELEASE)/%.o: $(SRCDIR)/%.c $(SRC_INCLUDES) $(VENDOR_INCLUDES)
+$(OBJDIR_RELEASE)/%.o: $(SRCDIR)/%.c
 	$(COMP) $(COMMON_COMPFLAGS) $(COMPFLAGS_RELEASE) -c $< -o $@
 
 clean:
