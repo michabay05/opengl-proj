@@ -1,6 +1,7 @@
 #include "cglm/types.h"
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
+#include "window.h"
 
 #include <stddef.h>
 #include <stdio.h>
@@ -19,28 +20,7 @@ GLint init_shaders(const char *vertex_path, const char *frag_path);
 void init_buffers(VertInfo *data, GLuint *vao, GLuint *vbo);
 
 int main(void) {
-    if (glfwInit() != GLFW_TRUE) {
-        printf("[ERROR] Unable to initialize glfw\n");
-        return 1;
-    }
-
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_CONTEXT_DEBUG, GLFW_TRUE);
-
-    GLFWwindow *window = glfwCreateWindow(800, 600, "OpenGL Project", NULL, NULL);
-    if (window == NULL) {
-        printf("[ERROR] Unable to create a GLFW window\n");
-        glfwTerminate();
-        return 1;
-    }
-
-    glfwMakeContextCurrent(window);
-
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        printf("[ERROR] Unable to intialize GLAD.\n");
-        glfwTerminate();
+    if (!window_create(800, 600, "OpenGL Project")) {
         return 1;
     }
 
@@ -55,9 +35,9 @@ int main(void) {
 
     GLuint vao, vbo;
     VertInfo triangle[] = {
-        {{-0.5, -0.5, 0.0}, {1.0, 0.0, 0.0, 0.5}},
-        {{0.5, -0.5, 0.0}, {0.0, 1.0, 0.0, 0.5}},
-        {{0.0, 0.5, 0.0}, {0.0, 0.0, 1.0, 0.0}},
+        {{-0.5, -0.5, 0.0}, {1.0, 0.0, 0.0, 1.0}},
+        {{0.5, -0.5, 0.0}, {0.0, 1.0, 0.0, 1.0}},
+        {{0.0, 0.5, 0.0}, {0.0, 0.0, 1.0, 1.0}},
     };
     init_buffers(triangle, &vao, &vbo);
 
@@ -67,7 +47,7 @@ int main(void) {
     }
     glUseProgram(shader);
 
-    while (!glfwWindowShouldClose(window)) {
+    while (!glfwWindowShouldClose(window.handle)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(0.11, 0.11, 0.11, 1.0);
 
@@ -75,7 +55,7 @@ int main(void) {
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(window.handle);
         glfwPollEvents();
     }
 
