@@ -2,14 +2,12 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
+#include "renderer.h"
 #include "window.h"
-#include "shader.h"
 
 #include <stddef.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
 
 typedef struct {
     vec3 pos;
@@ -23,38 +21,21 @@ void init_buffers(VertInfo *data, GLuint *vao, GLuint *vbo);
 int main(void)
 {
     if (!window_create(800, 600, "OpenGL Project")) {
+        printf("[ERROR] Failed to create window.\n");
         return 1;
     }
 
-    glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-    glDebugMessageCallback(debug_callback, NULL);
-
-    glViewport(0, 0, 800, 600);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_DEPTH_TEST);
-
-    GLuint vao, vbo;
-    VertInfo triangle[] = {
-        {{-0.5, -0.5, 0.0}, {1.0, 0.0, 0.0, 1.0}},
-        {{0.5, -0.5, 0.0}, {0.0, 1.0, 0.0, 1.0}},
-        {{0.0, 0.5, 0.0}, {0.0, 0.0, 1.0, 1.0}},
-    };
-    init_buffers(triangle, &vao, &vbo);
-
-    struct Shader shader;
-    bool success = shader_load_file("res/shaders/circle.vert", "res/shaders/circle.frag", &shader);
-    if (!success) {
-        printf("[ERROR] Shader compilation failed.\n");
+    if (!renderer_init(window.width, window.height)) {
+        printf("[ERROR] Failed to init renderer.\n");
+        return 1;
     }
-    glUseProgram(shader.id);
 
     while (!glfwWindowShouldClose(window.handle)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(0.11, 0.11, 0.11, 1.0);
 
-        glBindVertexArray(vao);
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBindVertexArray(rend.vao.handle);
+        glBindBuffer(GL_ARRAY_BUFFER, rend.vbo.handle);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
         glfwSwapBuffers(window.handle);

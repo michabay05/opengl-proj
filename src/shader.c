@@ -4,6 +4,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+static bool _compile_shader(const char *path, bool is_vertex, int *shader);
+static bool _link_program(int vertex_id, int fragment_id, int *program);
+
+bool shader_load_file(const char *vertex_path, const char *fragment_path, struct Shader *sh)
+{
+    int vertex_shader, fragment_shader;
+    bool vertex_success = _compile_shader(vertex_path, true, &vertex_shader);
+    bool fragment_success = _compile_shader(fragment_path, false, &fragment_shader);
+
+    if (!fragment_success || !vertex_success) {
+        printf("[ERROR] Vertex success: %d\n", vertex_success);
+        printf("[ERROR] Fragment success: %d\n", fragment_success);
+        return false;
+    }
+
+    return _link_program(vertex_shader, fragment_shader, &sh->id);
+}
+
+void shader_bind(struct Shader sh)
+{
+    glUseProgram(sh.id);
+}
+
+void shader_unbind(void)
+{
+    glUseProgram(0);
+}
+
 static bool _compile_shader(const char *path, bool is_vertex, int *shader)
 {
     FILE *f = fopen(path, "r");
@@ -37,7 +65,8 @@ static bool _compile_shader(const char *path, bool is_vertex, int *shader)
     return true;
 }
 
-static bool _link_program(int vertex_id, int fragment_id, int *program) {
+static bool _link_program(int vertex_id, int fragment_id, int *program)
+{
     int shader_program = glCreateProgram();
 
     glAttachShader(shader_program, vertex_id);
@@ -58,19 +87,4 @@ static bool _link_program(int vertex_id, int fragment_id, int *program) {
     glDeleteShader(fragment_id);
     *program = shader_program;
     return true;
-}
-
-bool shader_load_file(const char *vertex_path, const char *fragment_path, struct Shader *sh)
-{
-    int vertex_shader, fragment_shader;
-    bool vertex_success = _compile_shader(vertex_path, true, &vertex_shader);
-    bool fragment_success = _compile_shader(fragment_path, false, &fragment_shader);
-
-    if (!fragment_success || !vertex_success) {
-        printf("[ERROR] Vertex success: %d\n", vertex_success);
-        printf("[ERROR] Fragment success: %d\n", fragment_success);
-        return false;
-    }
-
-    return _link_program(vertex_shader, fragment_shader, &sh->id);
 }
