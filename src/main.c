@@ -46,29 +46,6 @@ int main(void)
     return 0;
 }
 
-void init_buffers(VertInfo *data, GLuint *vao, GLuint *vbo)
-{
-    glGenVertexArrays(1, vao);
-    glBindVertexArray(*vao);
-
-    glGenBuffers(1, vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, *vbo);
-    glBufferData(GL_ARRAY_BUFFER, 3 * sizeof(data[0]), data, GL_STATIC_DRAW);
-
-    GLint pos_loc = 0;
-    glVertexAttribPointer(pos_loc, 3, GL_FLOAT, GL_FALSE, sizeof(VertInfo),
-                          (void *)offsetof(VertInfo, pos));
-    glEnableVertexAttribArray(pos_loc);
-
-    GLint color_loc = 1;
-    glVertexAttribPointer(color_loc, 4, GL_FLOAT, GL_FALSE, sizeof(VertInfo),
-                          (void *)offsetof(VertInfo, color));
-    glEnableVertexAttribArray(color_loc);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-}
-
 void debug_callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length,
                     const GLchar *message, const void *userParam)
 {
